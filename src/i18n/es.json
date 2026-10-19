@@ -1,0 +1,8 @@
+{
+  "system": {
+    "api_status_title": "Estado del Sistema",
+    "api_available": "API disponible",
+    "api_unavailable": "API no disponible",
+    "checking": "Comprobando..."
+  }
+}
