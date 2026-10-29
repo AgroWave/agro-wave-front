@@ -4,5 +4,52 @@
     "api_available": "API disponible",
     "api_unavailable": "API no disponible",
     "checking": "Comprobando..."
+  },
+  "auth": {
+    "login_title": "Iniciar Sesión",
+    "login_subtitle": "Ingresa a la plataforma AGROWAVE para gestionar tus enlaces LPWAN.",
+    "register_title": "Crear Cuenta",
+    "register_subtitle": "Regístrate para simular balances de enlace y cobertura.",
+    "forgot_password_title": "Recuperar Contraseña",
+    "forgot_password_subtitle": "Ingresa tu correo para recibir un enlace de restablecimiento.",
+    "reset_password_title": "Nueva Contraseña",
+    "reset_password_subtitle": "Define una nueva contraseña segura para tu cuenta.",
+    "confirm_email_title": "Confirmación de Cuenta",
+    "confirming": "Confirmando tu cuenta...",
+    "email_label": "Correo Electrónico",
+    "email_placeholder": "usuario@ejemplo.com",
+    "name_label": "Nombre Completo",
+    "name_placeholder": "Juan Pérez",
+    "password_label": "Contraseña",
+    "password_placeholder": "Mínimo 8 caracteres",
+    "confirm_password_label": "Confirmar Contraseña",
+    "new_password_label": "Nueva Contraseña",
+    "login_button": "Iniciar Sesión",
+    "register_button": "Crear Cuenta",
+    "send_reset_link_button": "Enviar Enlace",
+    "reset_password_button": "Restablecer Contraseña",
+    "back_to_login": "Volver a Iniciar Sesión",
+    "no_account": "¿No tienes una cuenta?",
+    "have_account": "¿Ya tienes una cuenta?",
+    "forgot_password_link": "¿Olvidaste tu contraseña?",
+    "register_success": "¡Registro exitoso! Por favor verifica tu bandeja de entrada o los registros para activar tu cuenta.",
+    "reset_request_success": "Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.",
+    "reset_success": "¡Contraseña actualizada con éxito! Ya puedes iniciar sesión.",
+    "confirm_success": "¡Tu cuenta ha sido activada exitosamente! Ya puedes iniciar sesión.",
+    "validation": {
+      "email_invalid": "Ingresa un correo electrónico válido.",
+      "name_min": "El nombre debe tener al menos 2 caracteres.",
+      "password_min": "La contraseña debe tener al menos 8 caracteres.",
+      "passwords_mismatch": "Las contraseñas no coinciden.",
+      "token_required": "Token de verificación requerido."
+    },
+    "errors": {
+      "DuplicateEmail": "Este correo electrónico ya se encuentra registrado.",
+      "UnconfirmedAccount": "Tu cuenta aún no ha sido confirmada. Revisa tu correo para activarla.",
+      "InvalidCredentials": "El correo o la contraseña son incorrectos.",
+      "InvalidOrExpiredToken": "El enlace de verificación es inválido o ha expirado.",
+      "InvalidPassword": "La contraseña actual es incorrecta.",
+      "generic": "Ocurrió un error. Por favor intenta nuevamente."
+    }
   }
 }
