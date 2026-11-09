@@ -1,16 +1,29 @@
+import { Loader2 } from "lucide-react";
 import * as React from "react";
 import { cn } from "../../lib/utils";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
   size?: "sm" | "md" | "lg";
+  isLoading?: boolean;
 }
 
 /**
  * Reusable interactive button component styled with Tailwind.
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      disabled,
+      isLoading = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const baseStyles =
       "inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
@@ -31,10 +44,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         className={cn(baseStyles, variantStyles[variant], sizeStyles[size], className)}
         {...props}
-      />
+      >
+        {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+        {children}
+      </button>
     );
   }
 );
