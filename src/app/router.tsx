@@ -16,6 +16,8 @@ import { ResetPasswordForm } from "../features/auth/ResetPasswordForm";
 import { useAuthStore } from "../features/auth/useAuthStore";
 import { DemsPage } from "../features/dem/DemsPage";
 import { ProfilesPage } from "../features/profiles/ProfilesPage";
+import { ScenarioEditorPage } from "../features/scenarios/ScenarioEditorPage";
+import { ScenariosPage } from "../features/scenarios/ScenariosPage";
 import { ProtectedRoute, PublicOnlyRoute } from "./guards";
 
 function LoginPage() {
@@ -151,14 +153,9 @@ export function AppRouter() {
               </div>
             }
           />
-          <Route
-            path="scenarios"
-            element={
-              <div className="p-8 text-center text-slate-400">
-                Módulo de Escenarios (INC-04)
-              </div>
-            }
-          />
+          <Route path="scenarios" element={<ScenariosPage />} />
+          <Route path="scenarios/new" element={<ScenarioEditorPage />} />
+          <Route path="scenarios/:id" element={<ScenarioEditorPage />} />
           <Route path="dem" element={<DemsPage />} />
         </Route>
 
