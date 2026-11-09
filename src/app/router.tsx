@@ -14,6 +14,7 @@ import { LoginForm } from "../features/auth/LoginForm";
 import { RegisterForm } from "../features/auth/RegisterForm";
 import { ResetPasswordForm } from "../features/auth/ResetPasswordForm";
 import { useAuthStore } from "../features/auth/useAuthStore";
+import { DemsPage } from "../features/dem/DemsPage";
 import { ProfilesPage } from "../features/profiles/ProfilesPage";
 import { ProtectedRoute, PublicOnlyRoute } from "./guards";
 
@@ -158,14 +159,7 @@ export function AppRouter() {
               </div>
             }
           />
-          <Route
-            path="dem"
-            element={
-              <div className="p-8 text-center text-slate-400">
-                Módulo DEM (INC-03)
-              </div>
-            }
-          />
+          <Route path="dem" element={<DemsPage />} />
         </Route>
 
         {/* Catch-all redirect */}

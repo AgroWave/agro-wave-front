@@ -111,5 +111,45 @@
       "ProfileNotFound": "El perfil solicitado no existe.",
       "generic": "Ocurrió un error al procesar el perfil."
     }
+  },
+  "dem": {
+    "title": "Modelos Digitales de Elevación (DEM)",
+    "subtitle": "Gestión de elevación sobre terreno FABDEM de Colombia continental para perfiles de enlace.",
+    "download_button": "Descargar DEM",
+    "search_placeholder": "Buscar DEM por nombre o descripción...",
+    "status_downloading": "Descargando...",
+    "status_available": "Disponible",
+    "status_failed": "Fallido",
+    "dimensions_label": "Dimensiones:",
+    "resolution_label": "Resolución:",
+    "size_label": "Tamaño:",
+    "bounds_label": "Límites (WGS84):",
+    "edit_action": "Editar",
+    "delete_action": "Eliminar",
+    "delete_confirm": "¿Estás seguro de eliminar este DEM? Se eliminará tanto el registro como el archivo COG almacenado.",
+    "download_modal_title": "Descargar Nuevo Terreno FABDEM",
+    "edit_modal_title": "Editar Metadatos de DEM",
+    "name_label": "Nombre del DEM",
+    "name_placeholder": "e.g. Sabana de Bogotá Centro",
+    "description_label": "Descripción (opcional)",
+    "description_placeholder": "e.g. Zona agropecuaria para cultivos de flores",
+    "south_label": "Latitud Sur (°)",
+    "west_label": "Longitud Oeste (°)",
+    "north_label": "Latitud Norte (°)",
+    "east_label": "Longitud Este (°)",
+    "estimated_dimensions": "Dimensiones estimadas:",
+    "area_warning_too_small": "El área debe medir al menos 1.5 km por lado (RN-13).",
+    "area_warning_outside_colombia": "El área debe estar dentro de Colombia continental (RN-12).",
+    "save": "Guardar",
+    "start_download": "Iniciar Descarga",
+    "cancel": "Cancelar",
+    "errors": {
+      "AreaOutsideColombia": "El área solicitada está fuera de Colombia continental (RN-12).",
+      "AreaTooSmall": "El área solicitada debe medir al menos 1.5 km por cada lado (RN-13).",
+      "InvalidBounds": "Las coordenadas son inválidas: sur debe ser menor que norte y oeste menor que este.",
+      "DemNotFound": "El modelo de elevación solicitado no existe o no tienes acceso a él.",
+      "ResourceInUse": "No se puede eliminar el DEM porque está en uso por escenarios (RN-28).",
+      "generic": "Ocurrió un error al procesar el DEM."
+    }
   }
 }
