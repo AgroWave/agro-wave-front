@@ -45,6 +45,7 @@ import {
   useScenarioMutations,
   useScenarioValidation,
 } from "./useScenarios";
+import { useSimulationMutations } from "../simulations/useSimulations";
 
 /**
  * Step-by-step scenario editor with Leaflet map, star topology deployment, and Longley-Rice configuration (UC-SC-01..04).
@@ -66,6 +67,7 @@ export function ScenarioEditorPage() {
     duplicateScenario,
     createScenarioVariant,
   } = useScenarioMutations();
+  const { createAndRunMutation } = useSimulationMutations();
 
   const draft = useScenarioDraftStore();
   const { resetDraft, loadFromScenario } = draft;
@@ -1041,12 +1043,29 @@ export function ScenarioEditorPage() {
               <Button
                 type="button"
                 variant="primary"
-                disabled={!isSimulable}
-                onClick={() => navigate("/simulations")}
+                disabled={!isSimulable || createAndRunMutation.isPending}
+                onClick={async () => {
+                  if (!existingScenario) return;
+                  try {
+                    const sim = await createAndRunMutation.mutateAsync({
+                      scenario_id: existingScenario.id,
+                      name: `Simulación - ${draft.name || existingScenario.name}`,
+                      description: draft.description || existingScenario.description,
+                    });
+                    navigate(`/simulations/${sim.id}`);
+                  } catch (err) {
+                    const apiErr = err as { message?: string };
+                    setErrorBanner(
+                      apiErr.message || "Error al iniciar simulación.",
+                    );
+                  }
+                }}
                 className="flex items-center gap-2 shrink-0"
               >
                 <Play className="w-4 h-4" />
-                {t("scenarios.simulate_button")}
+                {createAndRunMutation.isPending
+                  ? "Iniciando..."
+                  : t("scenarios.simulate_button")}
               </Button>
             </CardContent>
           </Card>

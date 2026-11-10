@@ -18,6 +18,9 @@ import { DemsPage } from "../features/dem/DemsPage";
 import { ProfilesPage } from "../features/profiles/ProfilesPage";
 import { ScenarioEditorPage } from "../features/scenarios/ScenarioEditorPage";
 import { ScenariosPage } from "../features/scenarios/ScenariosPage";
+import { SimulationComparePage } from "../features/simulations/SimulationComparePage";
+import { SimulationDetailPage } from "../features/simulations/SimulationDetailPage";
+import { SimulationsPage } from "../features/simulations/SimulationsPage";
 import { ProtectedRoute, PublicOnlyRoute } from "./guards";
 
 function LoginPage() {
@@ -143,16 +146,11 @@ export function AppRouter() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="/profiles" replace />} />
+          <Route index element={<Navigate to="/simulations" replace />} />
           <Route path="profiles" element={<ProfilesPage />} />
-          <Route
-            path="simulations"
-            element={
-              <div className="p-8 text-center text-slate-400">
-                Módulo de Simulaciones (INC-05)
-              </div>
-            }
-          />
+          <Route path="simulations" element={<SimulationsPage />} />
+          <Route path="simulations/compare" element={<SimulationComparePage />} />
+          <Route path="simulations/:id" element={<SimulationDetailPage />} />
           <Route path="scenarios" element={<ScenariosPage />} />
           <Route path="scenarios/new" element={<ScenarioEditorPage />} />
           <Route path="scenarios/:id" element={<ScenarioEditorPage />} />
