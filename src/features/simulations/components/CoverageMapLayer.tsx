@@ -18,6 +18,12 @@ export interface CoverageMapLayerProps {
   sensitivityDbm: number;
   samples: CoverageSample[];
   endNodes?: EndNodeMarker[];
+  bounds?: {
+    south: number;
+    west: number;
+    north: number;
+    east: number;
+  };
 }
 
 /**
@@ -30,6 +36,7 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
   sensitivityDbm,
   samples,
   endNodes = [],
+  bounds,
 }) => {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const mapRef = React.useRef<L.Map | null>(null);
@@ -39,8 +46,12 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
     if (!containerRef.current || mapRef.current) return;
 
     try {
+      const initialCenter: [number, number] = bounds
+        ? [(bounds.south + bounds.north) / 2, (bounds.west + bounds.east) / 2]
+        : [accessNodeLat, accessNodeLon];
+
       const map = L.map(containerRef.current, {
-        center: [accessNodeLat, accessNodeLon],
+        center: initialCenter,
         zoom: 12,
         minZoom: 4,
       });
@@ -63,7 +74,7 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
         mapRef.current = null;
       }
     };
-  }, [accessNodeLat, accessNodeLon]);
+  }, [accessNodeLat, accessNodeLon, bounds]);
 
   React.useEffect(() => {
     const layerGroup = layerGroupRef.current;
@@ -72,9 +83,29 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
 
     layerGroup.clearLayers();
 
-    // 1. Spatial Coverage Samples (soft semi-transparent overlay)
     const latLngs: L.LatLngTuple[] = [[accessNodeLat, accessNodeLon]];
 
+    // 0. Exact Study Area Bounds Rectangle (RN-13)
+    if (bounds) {
+      const rect = L.rectangle(
+        [
+          [bounds.south, bounds.west],
+          [bounds.north, bounds.east],
+        ],
+        {
+          color: "#475569",
+          weight: 2,
+          dashArray: "6, 6",
+          fill: false,
+        }
+      );
+      rect.bindTooltip("Área de Estudio del Escenario", { sticky: true });
+      rect.addTo(layerGroup);
+      latLngs.push([bounds.south, bounds.west]);
+      latLngs.push([bounds.north, bounds.east]);
+    }
+
+    // 1. Spatial Coverage Samples (soft semi-transparent overlay)
     samples.forEach((sample) => {
       const isViable = sample.viable;
       const color = isViable ? "#16a34a" : "#dc2626";
@@ -133,13 +164,15 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
 
     if (latLngs.length > 1) {
       try {
-        const bounds = L.latLngBounds(latLngs);
-        map.fitBounds(bounds, { padding: [20, 20] });
+        const boundsToFit = bounds
+          ? L.latLngBounds([[bounds.south, bounds.west], [bounds.north, bounds.east]])
+          : L.latLngBounds(latLngs);
+        map.fitBounds(boundsToFit, { padding: [24, 24] });
       } catch {
         // bounds fit fallback
       }
     }
-  }, [accessNodeLat, accessNodeLon, accessNodeName, sensitivityDbm, samples, endNodes]);
+  }, [accessNodeLat, accessNodeLon, accessNodeName, sensitivityDbm, samples, endNodes, bounds]);
 
   return (
     <div
@@ -166,6 +199,12 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
               <span className="font-medium text-[#0f172a]">
                 Nodos Sensores ({endNodes.length})
               </span>
+            </div>
+          )}
+          {bounds && (
+            <div className="flex items-center gap-1.5">
+              <span className="inline-block w-4 h-2 border border-dashed border-slate-600 bg-transparent"></span>
+              <span className="font-medium text-[#0f172a]">Área de Estudio Exacta</span>
             </div>
           )}
           <div className="flex items-center gap-1.5">

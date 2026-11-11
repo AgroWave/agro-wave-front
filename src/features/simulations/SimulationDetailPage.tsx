@@ -221,6 +221,7 @@ export function SimulationDetailPage() {
       {sim.coverage_result && sim.coverage_result.samples.length > 0 && (() => {
         const rawAccessNodes = (sim.snapshot as { access_nodes?: Array<{ name?: string; lat?: number; latitude?: number; lng?: number; longitude?: number; sensitivity_dbm?: number }> })?.access_nodes;
         const rawEndNodes = (sim.snapshot as { end_nodes?: Array<{ id?: string; name?: string; lat?: number; latitude?: number; lng?: number; longitude?: number; height_agl_m?: number }> })?.end_nodes;
+        const rawBounds = (sim.snapshot as { bounds?: { south: number; west: number; north: number; east: number } })?.bounds;
         const firstNode = rawAccessNodes?.[0];
         const nodeName = firstNode?.name ?? "Gateway";
         const nodeLat = firstNode?.lat ?? firstNode?.latitude ?? 4.66;
@@ -252,6 +253,7 @@ export function SimulationDetailPage() {
               sensitivityDbm={sensDbm}
               samples={sim.coverage_result.samples}
               endNodes={endNodeMarkers}
+              bounds={rawBounds}
             />
           </div>
         );
