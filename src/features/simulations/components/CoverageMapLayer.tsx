@@ -176,7 +176,7 @@ export const CoverageMapLayer: React.FC<CoverageMapLayerProps> = ({
 
   return (
     <div
-      className="relative rounded-lg border border-slate-300 overflow-hidden shadow-sm"
+      className="relative isolate z-0 rounded-lg border border-slate-300 overflow-hidden shadow-sm"
       data-testid="coverage-map-container"
     >
       <div ref={containerRef} className="h-96 w-full bg-slate-100" />

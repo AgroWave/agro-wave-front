@@ -38,7 +38,7 @@ export function AppShell(props: AppShellProps) {
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 h-16 border-b border-[#6e1111] bg-[#8b1919] px-6 flex items-center justify-between shrink-0 shadow-md">
+        <header className="sticky top-0 z-40 h-16 border-b border-[#6e1111] bg-[#8b1919] px-6 flex items-center justify-between shrink-0 shadow-md">
           <div>
             <div className="text-sm font-bold tracking-wide text-white uppercase">
               AGROWAVE &bull; Simulador LPWAN Colombia
