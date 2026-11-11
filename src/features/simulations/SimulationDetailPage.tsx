@@ -219,12 +219,21 @@ export function SimulationDetailPage() {
 
       {/* Spatial Coverage Map Layer (RN-48) */}
       {sim.coverage_result && sim.coverage_result.samples.length > 0 && (() => {
-        const rawNodes = (sim.snapshot as { access_nodes?: Array<{ name?: string; lat?: number; latitude?: number; lng?: number; longitude?: number; sensitivity_dbm?: number }> })?.access_nodes;
-        const firstNode = rawNodes?.[0];
+        const rawAccessNodes = (sim.snapshot as { access_nodes?: Array<{ name?: string; lat?: number; latitude?: number; lng?: number; longitude?: number; sensitivity_dbm?: number }> })?.access_nodes;
+        const rawEndNodes = (sim.snapshot as { end_nodes?: Array<{ id?: string; name?: string; lat?: number; latitude?: number; lng?: number; longitude?: number; height_agl_m?: number }> })?.end_nodes;
+        const firstNode = rawAccessNodes?.[0];
         const nodeName = firstNode?.name ?? "Gateway";
         const nodeLat = firstNode?.lat ?? firstNode?.latitude ?? 4.66;
         const nodeLon = firstNode?.lng ?? firstNode?.longitude ?? -74.00;
         const sensDbm = firstNode?.sensitivity_dbm ?? -137.0;
+
+        const endNodeMarkers = (rawEndNodes ?? []).map((en, idx) => ({
+          id: en.id ?? `en-${idx}`,
+          name: en.name ?? `Sensor ${idx + 1}`,
+          lat: Number(en.lat ?? en.latitude ?? 4.66),
+          lng: Number(en.lng ?? en.longitude ?? -74.00),
+          heightAglM: en.height_agl_m,
+        }));
 
         return (
           <div className="space-y-2">
@@ -242,6 +251,7 @@ export function SimulationDetailPage() {
               accessNodeLon={nodeLon}
               sensitivityDbm={sensDbm}
               samples={sim.coverage_result.samples}
+              endNodes={endNodeMarkers}
             />
           </div>
         );

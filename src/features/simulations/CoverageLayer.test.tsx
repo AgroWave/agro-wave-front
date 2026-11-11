@@ -92,6 +92,15 @@ describe("AC-30: DSR Metrics and Spatial Coverage UI", () => {
             sensitivity_dbm: -137.0,
           },
         ],
+        end_nodes: [
+          {
+            id: "en-1",
+            name: "Sensor-Humedad-1",
+            lat: 4.665,
+            lng: -74.005,
+            height_agl_m: 2.0,
+          },
+        ],
       },
       summary: {
         viable_links_pct: 100.0,
@@ -158,6 +167,10 @@ describe("AC-30: DSR Metrics and Spatial Coverage UI", () => {
     // Verify DSR metrics section is present
     expect(screen.getByTestId("dsr-metrics-section")).toBeInTheDocument();
     expect(screen.getByText("45.67")).toBeInTheDocument();
+
+    // Verify Coverage map container and sensor node legend
+    expect(screen.getByTestId("coverage-map-container")).toBeInTheDocument();
+    expect(screen.getByText(/Nodos Sensores \(1\)/i)).toBeInTheDocument();
 
     // Verify Radio Mobile export button is rendered
     const exportButton = screen.getByRole("link", {
