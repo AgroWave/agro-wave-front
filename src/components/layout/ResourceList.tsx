@@ -58,7 +58,7 @@ export function ResourceList<T>(props: ResourceListProps<T>) {
           Cargando catálogo...
         </div>
       ) : items.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-800 p-12 text-center text-slate-500">
+        <div className="rounded-none border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
           {emptyMessage}
         </div>
       ) : (

@@ -101,15 +101,15 @@ export function ProfileForm(props: ProfileFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6 my-8">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-          <h2 className="text-lg font-bold text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
+      <div className="w-full max-w-xl rounded-none border border-slate-400 bg-white p-6 shadow-2xl space-y-6 my-8">
+        <div className="flex items-center justify-between border-b border-[#6e1111] pb-4 -mx-6 px-6 -mt-6 pt-5 bg-[#8b1919] text-white">
+          <h2 className="text-base font-bold tracking-wide uppercase text-white">
             {title ?? (initialProfile ? t("profiles.edit_title") : t("profiles.create_title"))}
           </h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded-none text-white/80 hover:text-white cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -127,7 +127,7 @@ export function ProfileForm(props: ProfileFormProps) {
               placeholder="e.g. LoRaWAN 915 MHz Campo"
             />
             {errors.name && (
-              <p className="mt-1 text-xs text-rose-400">{errors.name.message}</p>
+              <p className="mt-1 text-xs text-rose-600 font-medium">{errors.name.message}</p>
             )}
           </div>
 
@@ -138,7 +138,7 @@ export function ProfileForm(props: ProfileFormProps) {
                 id="technology"
                 disabled={Boolean(initialProfile)}
                 {...register("technology")}
-                className="flex h-10 w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="flex h-10 w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] shadow-2xs focus:outline-none focus:ring-2 focus:ring-[#8b1919]"
               >
                 <option value={Technology.LORAWAN}>LoRaWAN</option>
                 <option value={Technology.NB_IOT}>NB-IoT</option>
@@ -158,7 +158,7 @@ export function ProfileForm(props: ProfileFormProps) {
                 error={Boolean(errors.reference_sensitivity_dbm)}
               />
               {errors.reference_sensitivity_dbm && (
-                <p className="mt-1 text-xs text-rose-400">
+                <p className="mt-1 text-xs text-rose-600 font-medium">
                   {errors.reference_sensitivity_dbm.message}
                 </p>
               )}
@@ -174,7 +174,7 @@ export function ProfileForm(props: ProfileFormProps) {
               <select
                 id="spreading_factor"
                 {...register("spreading_factor", { valueAsNumber: true })}
-                className="flex h-10 w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="flex h-10 w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] shadow-2xs focus:outline-none focus:ring-2 focus:ring-[#8b1919]"
               >
                 {[7, 8, 9, 10, 11, 12].map((sf) => (
                   <option key={sf} value={sf}>
@@ -183,7 +183,7 @@ export function ProfileForm(props: ProfileFormProps) {
                 ))}
               </select>
               {errors.spreading_factor && (
-                <p className="mt-1 text-xs text-rose-400">
+                <p className="mt-1 text-xs text-rose-600 font-medium">
                   {errors.spreading_factor.message}
                 </p>
               )}
@@ -209,7 +209,7 @@ export function ProfileForm(props: ProfileFormProps) {
               {fields.map((field, index) => (
                 <div
                   key={field.id}
-                  className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-2"
+                  className="flex items-center gap-2 rounded-none border border-slate-300 bg-[#f8f9fb] p-2"
                 >
                   <div className="flex-1">
                     <Input
@@ -239,7 +239,7 @@ export function ProfileForm(props: ProfileFormProps) {
                   <button
                     type="button"
                     onClick={() => remove(index)}
-                    className="p-1.5 text-slate-500 hover:text-rose-400 rounded-md"
+                    className="p-1.5 text-slate-500 hover:text-rose-700 cursor-pointer"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -247,11 +247,11 @@ export function ProfileForm(props: ProfileFormProps) {
               ))}
             </div>
             {errors.bands && (
-              <p className="mt-1 text-xs text-rose-400">{errors.bands.message}</p>
+              <p className="mt-1 text-xs text-rose-600 font-medium">{errors.bands.message}</p>
             )}
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-300">
             <Button type="button" variant="ghost" onClick={onClose}>
               {t("profiles.cancel")}
             </Button>

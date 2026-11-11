@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  /* Light institutional palette inspired by Universidad Distrital (BDIGITAL) */
+  --color-slate-950: #f4f6fa;
+  --color-slate-900: #ffffff;
+  --color-slate-800: #e4e7ec;
+  --color-slate-700: #cbd2d9;
+  --color-slate-600: #9aa5b1;
+  --color-slate-500: #616e7c;
+  --color-slate-400: #475569;
+  --color-slate-300: #334155;
+  --color-slate-200: #1e293b;
+  --color-slate-100: #0f172a;
+
+  /*Readable semantic accents on light backgrounds */
+  --color-emerald-300: #065f46;
+  --color-emerald-400: #047857;
+  --color-amber-300: #92400e;
+  --color-amber-400: #b45309;
+  --color-rose-200: #881337;
+  --color-rose-300: #9f1239;
+  --color-rose-400: #be123c;
+  --color-sky-300: #075985;
+  --color-sky-400: #0369a1;
+  --color-indigo-300: #3730a3;
+}
+
 @layer base {
   :root {
     --background: 220 33% 98%;
@@ -8,27 +34,27 @@
     --card-foreground: 224 71% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71% 4%;
-    --primary: 142 71% 45%;
-    --primary-foreground: 355 100% 97%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 46%;
+    --primary: 0 69% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 12% 91%;
+    --secondary-foreground: 220 15% 20%;
     --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 220 14% 96%;
-    --accent-foreground: 224 71% 4%;
+    --muted-foreground: 220 9% 40%;
+    --accent: 28 87% 53%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 142 71% 45%;
-    --radius: 0.75rem;
+    --border: 220 13% 86%;
+    --input: 220 13% 84%;
+    --ring: 0 69% 32%;
+    --radius: 0.125rem;
   }
 }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #f4f6fa;
+  color: #1e293b;
   min-height: 100vh;
 }

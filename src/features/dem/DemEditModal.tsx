@@ -52,16 +52,16 @@ export function DemEditModal(props: DemEditModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-          <h2 className="text-lg font-semibold text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs">
+      <div className="w-full max-w-md rounded-none border border-slate-400 bg-white p-6 shadow-2xl space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-300 pb-4">
+          <h2 className="text-base font-bold text-[#0f172a] uppercase tracking-wide">
             {t("dem.edit_modal_title")}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-slate-100"
+            className="rounded-xs p-1 text-slate-500 hover:bg-slate-100 hover:text-[#0f172a] cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

@@ -102,7 +102,7 @@ export function LoginForm(props: LoginFormProps) {
               <button
                 type="button"
                 onClick={onNavigateForgotPassword}
-                className="text-xs text-emerald-400 hover:text-emerald-300 font-medium transition-colors cursor-pointer"
+                className="text-xs text-[#8b1919] hover:underline font-bold transition-colors cursor-pointer"
               >
                 {t("auth.forgot_password_link")}
               </button>
@@ -117,7 +117,7 @@ export function LoginForm(props: LoginFormProps) {
               autoComplete="current-password"
             />
             {errors.password && (
-              <p className="text-xs text-rose-400 font-medium">{errors.password}</p>
+              <p className="text-xs text-rose-600 font-medium">{errors.password}</p>
             )}
           </div>
 
@@ -126,12 +126,12 @@ export function LoginForm(props: LoginFormProps) {
           </Button>
         </CardContent>
         <CardFooter className="justify-center">
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[#475569] font-medium">
             {t("auth.no_account")}{" "}
             <button
               type="button"
               onClick={onNavigateRegister}
-              className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors cursor-pointer"
+              className="text-[#8b1919] hover:underline font-bold transition-colors cursor-pointer"
             >
               {t("auth.register_button")}
             </button>

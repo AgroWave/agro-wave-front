@@ -108,7 +108,7 @@ export function ScenariosPage() {
             aria-label="Filtro de tecnología"
             value={techFilter}
             onChange={(e) => setTechFilter(e.target.value)}
-            className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none"
+            className="rounded-xs border border-slate-300 bg-white px-3 py-2 text-xs text-[#0f172a] focus:border-[#8b1919] focus:outline-none shadow-2xs"
           >
             <option value="">{t("scenarios.filter_all")}</option>
             <option value="LORAWAN">LoRaWAN</option>
@@ -132,35 +132,35 @@ export function ScenariosPage() {
           const totalNodes =
             scenario.access_nodes.length + scenario.end_nodes.length;
           return (
-            <Card className="flex flex-col justify-between hover:border-slate-700 transition-colors">
+            <Card className="flex flex-col justify-between hover:border-slate-400 transition-colors shadow-2xs">
               <CardHeader className="flex flex-row items-start justify-between pb-2">
                 <div className="space-y-1 pr-2">
-                  <CardTitle className="text-base text-slate-100 flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CardTitle className="text-base text-[#0f172a] flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-[#8b1919] shrink-0" />
                     <span>{scenario.name}</span>
                   </CardTitle>
                   {scenario.description && (
-                    <p className="text-xs text-slate-400 line-clamp-2">
+                    <p className="text-xs text-[#64748b] line-clamp-2">
                       {scenario.description}
                     </p>
                   )}
                 </div>
 
                 {scenario.radio_config ? (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-xs font-semibold border bg-emerald-50 text-emerald-800 border-emerald-300">
                     <Radio className="w-3 h-3" />
                     {scenario.radio_config.technology} ·{" "}
                     {scenario.radio_config.frequency_mhz} MHz
                   </span>
                 ) : (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-slate-800 text-slate-400 border-slate-700">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-semibold border bg-slate-100 text-[#475569] border-slate-300">
                     {t("scenarios.no_profile_badge")}
                   </span>
                 )}
               </CardHeader>
 
-              <CardContent className="space-y-2 text-xs text-slate-300">
-                <div className="rounded-lg bg-slate-950/60 p-2.5 space-y-1 font-mono text-[11px] text-slate-400 border border-slate-800/80">
+              <CardContent className="space-y-2 text-xs text-[#1e293b]">
+                <div className="rounded-none bg-[#f8f9fb] p-2.5 space-y-1 font-mono text-[11px] text-[#1e293b] border border-slate-300">
                   <div className="flex justify-between">
                     <span>{t("dem.dimensions_label")}</span>
                     <span className="text-slate-200">

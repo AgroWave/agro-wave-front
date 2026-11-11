@@ -87,38 +87,38 @@ export function LinkProfileChart(props: LinkProfileChartProps) {
   }
 
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950/70 p-4">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <div className="rounded-none border border-slate-300 bg-white p-5 shadow-2xs">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
         <div>
-          <h4 className="text-sm font-semibold text-slate-100">
+          <h4 className="text-sm font-bold text-[#0f172a]">
             Perfil de Terreno y Primera Zona de Fresnel ({endNodeName} → {accessNodeName})
           </h4>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#475569] font-medium mt-0.5">
             Curvatura terrestre k = 4/3 · Despeje mínimo:{" "}
-            <span className="font-mono text-slate-200">
+            <span className="font-mono font-bold text-[#0f172a]">
               {fresnel.min_clearance_ratio.toFixed(2)} F1
             </span>{" "}
             a{" "}
-            <span className="font-mono text-slate-200">
+            <span className="font-mono font-bold text-[#0f172a]">
               {(fresnel.min_clearance_at_m / 1000).toFixed(2)} km
             </span>
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-[#1e293b]">
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-sm bg-emerald-600/60" />
+            <span className="inline-block h-2.5 w-2.5 rounded-none bg-emerald-600/70" />
             Terreno + curvatura
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-0.5 w-4 bg-sky-400" />
+            <span className="inline-block h-0.5 w-4 bg-sky-500" />
             Línea de vista (LoS)
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-0.5 w-4 border-b border-dashed border-amber-400" />
+            <span className="inline-block h-0.5 w-4 border-b-2 border-dashed border-amber-500" />
             Zona F1 (100 %)
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-0.5 w-4 border-b border-dotted border-rose-400" />
+            <span className="inline-block h-0.5 w-4 border-b-2 border-dotted border-rose-500" />
             Umbral 60 % F1
           </span>
         </div>
@@ -141,7 +141,7 @@ export function LinkProfileChart(props: LinkProfileChartProps) {
                 y1={y}
                 x2={width - padRight}
                 y2={y}
-                stroke="#1e293b"
+                stroke="#cbd5e1"
                 strokeDasharray="3 3"
               />
               <text

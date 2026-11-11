@@ -11,7 +11,7 @@ export interface AppShellProps {
 }
 
 /**
- * Main application shell containing sidebar navigation, user session bar, and main viewport.
+ * Main application shell containing sidebar navigation, institutional header, and main viewport.
  * @param props - Layout children or nested route outlet.
  * @returns Rendered application frame.
  */
@@ -34,26 +34,38 @@ export function AppShell(props: AppShellProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-row">
+    <div className="min-h-screen bg-[#f4f6fa] text-slate-100 flex flex-row">
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 border-b border-slate-800 bg-slate-900/60 backdrop-blur-md px-6 flex items-center justify-between shrink-0">
-          <div className="text-xs uppercase tracking-wider font-semibold text-slate-400">
-            Predicción LPWAN FABDEM Colombia
+        <header className="h-16 border-b border-[#6e1111] bg-[#8b1919] px-6 flex items-center justify-between shrink-0 shadow-sm">
+          <div>
+            <div className="text-sm font-bold tracking-wide text-white uppercase">
+              AGROWAVE &bull; Simulador LPWAN Colombia
+            </div>
+            <div className="text-[11px] text-red-100/90">
+              Modelado de Propagación Longley-Rice sobre Terreno FABDEM
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
             {user && (
               <div className="text-right text-xs">
-                <div className="font-semibold text-slate-200">{user.name}</div>
-                <div className="text-slate-400">
+                <div className="font-semibold text-white">{user.name}</div>
+                <div className="text-red-100/90">
                   {user.email} &bull;{" "}
-                  <span className="text-emerald-400 font-mono">{user.role}</span>
+                  <span className="bg-amber-500 text-white px-1.5 py-0.5 rounded-xs font-mono text-[10px] font-bold">
+                    {user.role}
+                  </span>
                 </div>
               </div>
             )}
-            <Button variant="outline" size="sm" onClick={handleLogout}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="border-white/40 bg-white/10 text-white hover:bg-white/20"
+            >
               {t("auth.logout_button")}
             </Button>
           </div>

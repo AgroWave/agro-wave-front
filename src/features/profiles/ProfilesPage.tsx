@@ -91,33 +91,33 @@ export function ProfilesPage() {
         searchPlaceholder={t("profiles.search_placeholder")}
         keyExtractor={(p) => p.id}
         filterSlot={
-          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-lg text-xs">
+          <div className="flex items-center border border-slate-300 bg-white rounded-none p-0.5 text-xs shadow-2xs">
             <button
               onClick={() => setOwnerFilter(undefined)}
-              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-none font-semibold transition-colors ${
                 ownerFilter === undefined
-                  ? "bg-emerald-600 text-white"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-[#8b1919] text-white"
+                  : "text-[#334155] hover:bg-[#eae9e6]"
               }`}
             >
               {t("profiles.filter_all")}
             </button>
             <button
               onClick={() => setOwnerFilter("predefined")}
-              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-none font-semibold transition-colors ${
                 ownerFilter === "predefined"
-                  ? "bg-emerald-600 text-white"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-[#8b1919] text-white"
+                  : "text-[#334155] hover:bg-[#eae9e6]"
               }`}
             >
               {t("profiles.filter_predefined")}
             </button>
             <button
               onClick={() => setOwnerFilter("mine")}
-              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-none font-semibold transition-colors ${
                 ownerFilter === "mine"
-                  ? "bg-emerald-600 text-white"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-[#8b1919] text-white"
+                  : "text-[#334155] hover:bg-[#eae9e6]"
               }`}
             >
               {t("profiles.filter_mine")}
@@ -128,18 +128,18 @@ export function ProfilesPage() {
           <Card
             key={profile.id}
             data-testid={`profile-card-${profile.id}`}
-            className="flex flex-col justify-between hover:border-slate-700 transition-colors"
+            className="flex flex-col justify-between hover:border-slate-400 transition-colors shadow-2xs"
           >
             <CardHeader className="space-y-2 pb-3">
               <div className="flex items-start justify-between gap-2">
-                <CardTitle className="text-base font-bold text-white leading-tight">
+                <CardTitle className="text-base font-bold text-[#0f172a] leading-tight">
                   {profile.name}
                 </CardTitle>
                 <span
-                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded-xs shrink-0 border ${
                     profile.is_predefined
-                      ? "bg-blue-500/15 text-blue-400 border border-blue-500/30"
-                      : "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                      ? "bg-sky-50 text-sky-800 border-sky-300"
+                      : "bg-emerald-50 text-emerald-800 border-emerald-300"
                   }`}
                 >
                   {profile.is_predefined
@@ -147,7 +147,7 @@ export function ProfilesPage() {
                     : t("profiles.custom_badge")}
                 </span>
               </div>
-              <div className="text-xs font-mono text-slate-400">
+              <div className="text-xs font-mono text-[#64748b]">
                 {profile.technology}
                 {profile.spreading_factor && ` • SF${profile.spreading_factor}`}
               </div>
@@ -167,12 +167,12 @@ export function ProfilesPage() {
               </div>
 
               <div>
-                <span className="text-slate-500 block">{t("profiles.bands_label")}</span>
+                <span className="text-[#64748b] block font-medium">{t("profiles.bands_label")}</span>
                 <div className="flex flex-wrap gap-1 mt-1 max-h-16 overflow-y-auto">
                   {profile.bands.map((b) => (
                     <span
                       key={b.code}
-                      className="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300"
+                      className="px-1.5 py-0.5 rounded-xs bg-[#f1f3f7] border border-slate-300 text-[10px] font-mono text-[#0f172a] font-semibold"
                     >
                       {b.code}
                     </span>
@@ -181,7 +181,7 @@ export function ProfilesPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="flex flex-col gap-2 pt-3 border-t border-slate-800/80">
+            <CardFooter className="flex flex-col gap-2 pt-3 border-t border-slate-300">
               <Button
                 variant="outline"
                 size="sm"

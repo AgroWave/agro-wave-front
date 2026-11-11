@@ -15,6 +15,42 @@ export type SimulationStatus = "CREATED" | "RUNNING" | "COMPLETED" | "FAILED";
 export type FresnelVerdict = "CLEAR" | "MARGINAL" | "OBSTRUCTED";
 
 /**
+ * DSR quantitative evaluation metrics for area coverage (RN-44..47).
+ */
+export interface CoverageMetrics {
+  effective_coverage_area_km2: number;
+  coverage_percentage: number;
+  max_coverage_radius_km: number;
+  variability_index: number;
+  total_area_km2: number;
+  covered_samples_count: number;
+  total_samples_count: number;
+}
+
+/**
+ * Single spatial point in a coverage simulation.
+ */
+export interface CoverageSample {
+  latitude: number;
+  longitude: number;
+  distance_m: number;
+  azimuth_deg: number;
+  received_power_dbm: number;
+  viable: boolean;
+  cell_area_km2: number;
+}
+
+/**
+ * Complete result of a spatial coverage simulation (RN-48, RN-49).
+ */
+export interface CoverageResult {
+  id: string;
+  access_node_id: string;
+  metrics: CoverageMetrics;
+  samples: CoverageSample[];
+}
+
+/**
  * Aggregated summary metrics for a completed simulation.
  */
 export interface SimulationSummary {
@@ -24,6 +60,7 @@ export interface SimulationSummary {
   fresnel_clear_count: number;
   fresnel_marginal_count: number;
   fresnel_obstructed_count: number;
+  coverage_metrics?: CoverageMetrics | null;
 }
 
 /**
@@ -121,6 +158,7 @@ export interface Simulation {
 export interface SimulationResults extends Simulation {
   link_results: LinkResult[];
   warnings: SimulationWarning[];
+  coverage_result?: CoverageResult | null;
 }
 
 /**

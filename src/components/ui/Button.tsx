@@ -9,7 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 /**
- * Reusable interactive button component styled with Tailwind.
+ * Reusable interactive button component styled with the institutional light palette.
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -25,14 +25,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
+      "inline-flex items-center justify-center font-semibold rounded-xs transition-colors focus:outline-none focus:ring-2 focus:ring-[#8b1919] focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
     const variantStyles = {
-      primary: "bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm",
-      secondary: "bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700",
-      outline: "border border-slate-600 text-slate-200 hover:bg-slate-800",
-      ghost: "text-slate-300 hover:bg-slate-800 hover:text-white",
-      destructive: "bg-rose-600 hover:bg-rose-500 text-white shadow-sm",
+      primary: "bg-[#8b1919] hover:bg-[#a31d1d] text-white border border-[#6e1111] shadow-2xs",
+      secondary: "bg-[#eae9e6] hover:bg-[#dedcd7] text-[#0f172a] border border-slate-300 shadow-2xs",
+      outline: "border border-slate-300 bg-white text-[#1e293b] hover:bg-[#f3f2ef] shadow-2xs",
+      ghost: "text-[#334155] hover:bg-[#eae9e6] hover:text-[#0f172a]",
+      destructive: "bg-rose-700 hover:bg-rose-800 text-white border border-rose-900 shadow-2xs",
     };
 
     const sizeStyles = {
