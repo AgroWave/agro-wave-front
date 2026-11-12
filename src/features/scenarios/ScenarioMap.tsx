@@ -188,7 +188,7 @@ export function ScenarioMap(props: ScenarioMapProps) {
   }, [bounds, accessNodes, endNodes, links, selectedNodeId, onSelectNode, onMoveNode]);
 
   return (
-    <div className="relative w-full h-full min-h-[420px] rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
+    <div className="relative isolate z-0 w-full h-full min-h-[420px] rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
       <div
         ref={containerRef}
         data-testid="scenario-leaflet-map"

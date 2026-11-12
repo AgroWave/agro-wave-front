@@ -37,7 +37,7 @@ export function SimulationComparePage() {
         <button
           type="button"
           onClick={() => navigate("/simulations")}
-          className="inline-flex items-center gap-2 text-xs text-slate-300 hover:text-white"
+          className="inline-flex items-center gap-2 text-xs text-slate-300 hover:text-slate-100"
         >
           <ArrowLeft className="h-4 w-4" /> Volver a Simulaciones
         </button>
@@ -49,20 +49,20 @@ export function SimulationComparePage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center gap-3">
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 pb-4 border-b border-slate-300">
         <button
           type="button"
           onClick={() => navigate("/simulations")}
-          className="rounded-lg border border-slate-800 bg-slate-900 p-2 text-slate-300 hover:bg-slate-800"
+          className="rounded-xs border border-slate-300 bg-white p-2 text-[#0f172a] hover:bg-[#f3f2ef] shadow-2xs cursor-pointer"
         >
           <ArrowLeft className="h-4 w-4" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">
+          <h1 className="text-2xl font-black text-[#0f172a]">
             Comparación de Variantes LPWAN
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#475569] font-medium mt-0.5">
             Grupo {report.comparison_group_id} · Modelo{" "}
             {report.propagation_model_id}
           </p>
@@ -70,15 +70,15 @@ export function SimulationComparePage() {
       </div>
 
       {/* Summary Comparison Table */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden">
-        <div className="border-b border-slate-800 px-4 py-3">
-          <h3 className="text-sm font-semibold text-slate-100">
+      <div className="rounded-none border border-slate-300 bg-white shadow-2xs overflow-hidden">
+        <div className="border-b border-slate-300 px-4 py-3 bg-[#eae9e6]">
+          <h3 className="text-sm font-bold text-[#0f172a]">
             Resumen por Variante
           </h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-200">
-            <thead className="bg-slate-950/70 text-slate-400 uppercase">
+          <table className="w-full text-left text-xs text-[#1e293b]">
+            <thead className="bg-[#f1f5f9] text-[#0f172a] font-bold uppercase border-b border-slate-300">
               <tr>
                 <th className="px-4 py-3">Simulación</th>
                 <th className="px-4 py-3">Tecnología</th>
@@ -89,12 +89,12 @@ export function SimulationComparePage() {
                 <th className="px-4 py-3">Fresnel (Desp/Marg/Obst)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80">
+            <tbody className="divide-y divide-slate-200">
               {report.simulations.map((s, idx) => (
-                <tr key={s.simulation_id}>
-                  <td className="px-4 py-3 font-semibold text-slate-100 flex items-center gap-2">
+                <tr key={s.simulation_id} className="hover:bg-slate-50">
+                  <td className="px-4 py-3 font-bold text-[#0f172a] flex items-center gap-2">
                     <span
-                      className="inline-block h-2.5 w-2.5 rounded-full"
+                      className="inline-block h-2.5 w-2.5 rounded-none"
                       style={{
                         backgroundColor:
                           VARIANT_COLORS[idx % VARIANT_COLORS.length],
@@ -102,20 +102,20 @@ export function SimulationComparePage() {
                     />
                     {s.name}
                   </td>
-                  <td className="px-4 py-3">{s.technology}</td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-semibold">{s.technology}</td>
+                  <td className="px-4 py-3 font-mono font-medium">
                     {s.frequency_mhz.toFixed(1)} MHz
                   </td>
-                  <td className="px-4 py-3 font-semibold text-emerald-400">
+                  <td className="px-4 py-3 font-bold text-emerald-800">
                     {s.summary.viable_links_pct.toFixed(1)} %
                   </td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-mono font-semibold text-[#0f172a]">
                     {s.summary.min_margin_db.toFixed(2)} dB
                   </td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-mono font-semibold text-[#0f172a]">
                     {s.summary.mean_margin_db.toFixed(2)} dB
                   </td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-mono font-medium text-[#475569]">
                     {s.summary.fresnel_clear_count} /{" "}
                     {s.summary.fresnel_marginal_count} /{" "}
                     {s.summary.fresnel_obstructed_count}
@@ -128,15 +128,15 @@ export function SimulationComparePage() {
       </div>
 
       {/* Per-Link Grouped Bar Comparison */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 space-y-5">
-        <h3 className="text-sm font-semibold text-slate-100">
+      <div className="rounded-none border border-slate-300 bg-white shadow-2xs p-5 space-y-5">
+        <h3 className="text-sm font-bold text-[#0f172a]">
           Comparación por Enlace (Margen y Path Loss p50)
         </h3>
         <div className="space-y-4">
           {report.links.map((linkRow) => (
             <div
               key={linkRow.link_key}
-              className="rounded-lg border border-slate-800 bg-slate-950/60 p-4 space-y-3"
+              className="rounded-none border border-slate-300 bg-[#f8f9fb] p-4 space-y-3"
             >
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold text-slate-100">

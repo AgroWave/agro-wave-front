@@ -63,20 +63,20 @@ export function DemsPage() {
     switch (status) {
       case "DOWNLOADING":
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border bg-sky-500/10 text-sky-400 border-sky-500/20">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-xs font-semibold border bg-sky-50 text-sky-800 border-sky-300">
             <Loader2 className="w-3 h-3 animate-spin" />
             {t("dem.status_downloading")}
           </span>
         );
       case "AVAILABLE":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-semibold border bg-emerald-50 text-emerald-800 border-emerald-300">
             {t("dem.status_available")}
           </span>
         );
       case "FAILED":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-rose-500/10 text-rose-400 border-rose-500/20">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-semibold border bg-rose-50 text-rose-800 border-rose-300">
             {t("dem.status_failed")}
           </span>
         );
@@ -125,8 +125,8 @@ export function DemsPage() {
                 {renderStatusBadge(dem.status)}
               </CardHeader>
 
-              <CardContent className="space-y-2 text-xs text-slate-300">
-                <div className="rounded-lg bg-slate-950/60 p-2.5 space-y-1 font-mono text-[11px] text-slate-400 border border-slate-800/80">
+              <CardContent className="space-y-2 text-xs text-[#1e293b]">
+                <div className="rounded-none bg-[#f8f9fb] p-2.5 space-y-1 font-mono text-[11px] text-[#1e293b] border border-slate-300">
                   <div className="flex justify-between">
                     <span>{t("dem.bounds_label")}</span>
                     <span className="text-slate-200">

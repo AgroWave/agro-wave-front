@@ -21,27 +21,27 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
   const pendingText = t("profiles.pending");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+      <div className="w-full max-w-2xl rounded-none border border-slate-400 bg-white p-6 shadow-2xl space-y-6">
+        <div className="flex items-center justify-between border-b border-[#6e1111] pb-4 -mx-6 px-6 -mt-6 pt-5 bg-[#8b1919] text-white">
           <div>
-            <h2 className="text-lg font-bold text-white">
+            <h2 className="text-base font-bold tracking-wide uppercase text-white">
               {t("profiles.templates_title")} &bull; {profile.technology}
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-red-100 mt-0.5">
               {t("profiles.templates_subtitle")}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded-none text-white/80 hover:text-white cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {isLoading ? (
-          <div className="p-8 text-center text-slate-400">Cargando plantillas...</div>
+          <div className="p-8 text-center text-[#475569] font-medium">Cargando plantillas...</div>
         ) : (
           <div className="space-y-4">
             {templates.map((template) => {
@@ -53,25 +53,25 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
               return (
                 <div
                   key={template.id}
-                  className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 space-y-3"
+                  className="rounded-none border border-slate-300 bg-[#f8f9fb] p-4 space-y-3 shadow-2xs"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-emerald-400 text-sm">
+                    <span className="font-bold text-[#047857] text-sm">
                       {roleLabel}
                     </span>
-                    <span className="text-xs font-mono text-slate-300">
+                    <span className="text-xs font-mono font-bold text-[#0f172a]">
                       {template.name}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
-                      <span className="text-slate-500 block">
+                      <span className="text-[#64748b] block font-medium">
                         {t("profiles.module_ref")}
                       </span>
-                      <span className="text-slate-200">
+                      <span className="text-[#0f172a] font-semibold">
                         {template.module_ref ?? (
-                          <span className="text-amber-400/90 italic">
+                          <span className="text-amber-800 font-normal italic">
                             {pendingText}
                           </span>
                         )}
@@ -79,12 +79,12 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
                     </div>
 
                     <div>
-                      <span className="text-slate-500 block">
+                      <span className="text-[#64748b] block font-medium">
                         {t("profiles.antenna_ref")}
                       </span>
-                      <span className="text-slate-200">
+                      <span className="text-[#0f172a] font-semibold">
                         {template.antenna.reference ?? (
-                          <span className="text-amber-400/90 italic">
+                          <span className="text-amber-800 font-normal italic">
                             {pendingText}
                           </span>
                         )}
@@ -92,15 +92,15 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
                     </div>
 
                     <div>
-                      <span className="text-slate-500 block">
+                      <span className="text-[#64748b] block font-medium">
                         {t("profiles.antenna_gain")}
                       </span>
-                      <span className="text-slate-200">
+                      <span className="text-[#0f172a] font-semibold">
                         {template.antenna.gain_dbi !== null &&
                         template.antenna.gain_dbi !== undefined ? (
                           `${template.antenna.gain_dbi} dBi`
                         ) : (
-                          <span className="text-amber-400/90 italic">
+                          <span className="text-amber-800 font-normal italic">
                             {pendingText}
                           </span>
                         )}
@@ -108,18 +108,18 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
                     </div>
 
                     <div>
-                      <span className="text-slate-500 block">
+                      <span className="text-[#64748b] block font-medium">
                         {t("profiles.tx_power")}
                       </span>
-                      <span className="text-slate-200">
+                      <span className="text-[#0f172a] font-semibold">
                         {template.tx_power ? (
                           `${template.tx_power.nominal_dbm} ± ${template.tx_power.tolerance_db} dBm`
                         ) : isEndNode ? (
-                          <span className="text-amber-400/90 italic">
+                          <span className="text-amber-800 font-normal italic">
                             {pendingText}
                           </span>
                         ) : (
-                          <span className="text-slate-500">N/A (Receptor)</span>
+                          <span className="text-[#64748b]">N/A (Receptor)</span>
                         )}
                       </span>
                     </div>
@@ -130,7 +130,7 @@ export function ProfileTemplates(props: ProfileTemplatesProps) {
           </div>
         )}
 
-        <div className="flex justify-end pt-2">
+        <div className="flex justify-end pt-2 border-t border-slate-200">
           <Button variant="outline" onClick={onClose}>
             {t("profiles.close")}
           </Button>

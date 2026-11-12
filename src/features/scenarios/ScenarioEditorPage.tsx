@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   Copy,
   Download,
+  Edit2,
   GitBranch,
   Play,
   Plus,
@@ -35,6 +36,7 @@ import { t } from "../../i18n";
 import { useDemMutations, useDems } from "../dem/useDems";
 import { useProfiles, useProfileTemplates } from "../profiles/useProfiles";
 import { CreateVariantModal } from "./CreateVariantModal";
+import { NodeEditModal } from "./NodeEditModal";
 import { ScenarioMap } from "./ScenarioMap";
 import {
   useScenarioDraftStore,
@@ -77,6 +79,10 @@ export function ScenarioEditorPage() {
   const [successBanner, setSuccessBanner] = React.useState<string | null>(null);
   const [isSaving, setIsSaving] = React.useState(false);
   const [isVariantModalOpen, setIsVariantModalOpen] = React.useState(false);
+  const [editingNodeData, setEditingNodeData] = React.useState<{
+    node: AccessNode | EndNode;
+    role: "ACCESS_NODE" | "END_NODE";
+  } | null>(null);
 
   // Forms for adding AccessNode and EndNode+Link
   const [newAnName, setNewAnName] = React.useState("GW-1");
@@ -413,29 +419,29 @@ export function ScenarioEditorPage() {
 
       {/* Banners */}
       {errorBanner && (
-        <div className="rounded-xl bg-rose-500/10 border border-rose-500/30 p-3 text-sm text-rose-300 flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+        <div className="rounded-none bg-rose-50 border border-rose-300 border-l-4 border-l-rose-700 p-3 text-sm text-rose-900 flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-rose-700 shrink-0" />
           <span>{errorBanner}</span>
         </div>
       )}
       {successBanner && (
-        <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 text-sm text-emerald-300 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="rounded-none bg-emerald-50 border border-emerald-300 border-l-4 border-l-emerald-700 p-3 text-sm text-emerald-900 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
           <span>{successBanner}</span>
         </div>
       )}
 
       {/* Stepper Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
+      <div className="flex flex-wrap gap-1 border-b border-slate-300 pb-0">
         {steps.map((s) => (
           <button
             key={s.key}
             type="button"
             onClick={() => draft.setActiveStep(s.key)}
-            className={`px-3.5 py-2 rounded-lg text-xs font-medium transition-colors ${
+            className={`px-4 py-2.5 rounded-none text-xs transition-colors border-t-2 cursor-pointer ${
               draft.activeStep === s.key
-                ? "bg-emerald-500 text-slate-950 font-semibold"
-                : "bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800"
+                ? "bg-white text-[#8b1919] font-bold border-t-[#8b1919] border-x border-b-0 border-slate-300 shadow-2xs -mb-px"
+                : "bg-[#eae9e6] text-[#0f172a] font-semibold hover:bg-[#dedcd7] border-t-transparent border-x border-b border-slate-300"
             }`}
           >
             {s.label}
@@ -519,18 +525,18 @@ export function ScenarioEditorPage() {
                   />
                 </div>
 
-                <div className="rounded-lg bg-slate-950 p-3 text-xs text-slate-300 border border-slate-800 space-y-1">
-                  <div>
+                <div className="rounded-none bg-[#f8f9fb] p-3 text-xs text-[#1e293b] border border-slate-300 space-y-1">
+                  <div className="font-semibold text-[#0f172a]">
                     Dimensiones: ~{dims.widthKm.toFixed(2)} km × ~
                     {dims.heightKm.toFixed(2)} km
                   </div>
                   {!hasMinimumDimensions(draft.bounds) && (
-                    <div className="text-rose-400">
+                    <div className="text-rose-600 font-medium">
                       {t("dem.area_warning_too_small")}
                     </div>
                   )}
                   {!isWithinContinentalColombia(draft.bounds) && (
-                    <div className="text-rose-400">
+                    <div className="text-rose-600 font-medium">
                       {t("dem.area_warning_outside_colombia")}
                     </div>
                   )}
@@ -546,13 +552,13 @@ export function ScenarioEditorPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-medium text-slate-300">
+                  <label className="block text-xs font-semibold text-[#1e293b]">
                     {t("scenarios.select_dem_label")}
                   </label>
                   <select
                     value={draft.demId || ""}
                     onChange={(e) => draft.setDemId(e.target.value || null)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 focus:border-emerald-500 focus:outline-none"
+                    className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                   >
                     <option value="">-- Sin DEM asignado --</option>
                     {coveringDems.map((d) => (
@@ -564,7 +570,7 @@ export function ScenarioEditorPage() {
                 </div>
 
                 {coveringDems.length === 0 && (
-                  <p className="text-xs text-amber-400">
+                  <p className="text-xs text-amber-700 font-medium">
                     {t("scenarios.no_covering_dems")}
                   </p>
                 )}
@@ -581,8 +587,8 @@ export function ScenarioEditorPage() {
                 </Button>
 
                 {selectedDem && (
-                  <div className="rounded-lg bg-slate-950 p-3 text-xs text-slate-300 border border-slate-800 space-y-1">
-                    <div className="font-semibold text-slate-100">
+                  <div className="rounded-none bg-[#f8f9fb] p-3 text-xs text-[#1e293b] border border-slate-300 space-y-1">
+                    <div className="font-semibold text-[#0f172a]">
                       DEM Seleccionado: {selectedDem.name}
                     </div>
                     <div>Estado: {selectedDem.status}</div>
@@ -604,13 +610,13 @@ export function ScenarioEditorPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="block text-sm font-medium text-slate-300">
+                  <label className="block text-xs font-semibold text-[#1e293b]">
                     {t("scenarios.select_profile_label")}
                   </label>
                   <select
                     value={draft.profileId || ""}
                     onChange={(e) => handleProfileSelect(e.target.value)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 focus:border-emerald-500 focus:outline-none"
+                    className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                   >
                     <option value="">-- Seleccionar Perfil LPWAN --</option>
                     {profiles.map((p) => (
@@ -625,7 +631,7 @@ export function ScenarioEditorPage() {
                 {selectedProfile && (
                   <>
                     <div className="space-y-1.5">
-                      <label className="block text-sm font-medium text-slate-300">
+                      <label className="block text-xs font-semibold text-[#1e293b]">
                         {t("scenarios.select_band_label")}
                       </label>
                       <select
@@ -637,7 +643,7 @@ export function ScenarioEditorPage() {
                             draft.frequencyMhz
                           )
                         }
-                        className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 focus:border-emerald-500 focus:outline-none"
+                        className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                       >
                         {selectedProfile.bands.map((b) => (
                           <option key={b.code} value={b.code}>
@@ -746,13 +752,13 @@ export function ScenarioEditorPage() {
                     {templates.filter((tpl) => tpl.role === "END_NODE").length >
                       0 && (
                       <div className="space-y-1">
-                        <label className="block text-xs font-medium text-slate-300">
+                        <label className="block text-xs font-semibold text-[#1e293b]">
                           {t("scenarios.apply_template_label")}
                         </label>
                         <select
                           value={newEnTemplateId}
                           onChange={(e) => handleApplyEndTemplate(e.target.value)}
-                          className="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs text-slate-100"
+                          className="w-full rounded-xs border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                         >
                           <option value="">-- Personalizado --</option>
                           {templates
@@ -767,13 +773,13 @@ export function ScenarioEditorPage() {
                     )}
 
                     <div className="space-y-1">
-                      <label className="block text-xs font-medium text-slate-300">
+                      <label className="block text-xs font-semibold text-[#1e293b]">
                         {t("scenarios.target_access_node_label")}
                       </label>
                       <select
                         value={targetAnId}
                         onChange={(e) => setTargetAnId(e.target.value)}
-                        className="w-full rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs text-slate-100"
+                        className="w-full rounded-xs border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                       >
                         {draft.accessNodes.map((an) => (
                           <option key={an.id} value={an.id}>
@@ -858,55 +864,87 @@ export function ScenarioEditorPage() {
                     stars.map((star) => (
                       <div
                         key={star.accessNode.id}
-                        className="rounded-lg border border-slate-800 bg-slate-950/70 p-3 space-y-2"
+                        className="rounded-none border border-slate-300 bg-white p-3 space-y-2 shadow-2xs"
                       >
                         <div className="flex items-center justify-between">
-                          <div className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
-                            <Radio className="w-3.5 h-3.5" />
+                          <div className="text-xs font-bold text-[#0f172a] flex items-center gap-1.5">
+                            <Radio className="w-3.5 h-3.5 text-[#8b1919]" />
                             <span>{star.title}</span>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              draft.removeAccessNode(star.accessNode.id)
-                            }
-                            className="text-rose-400 hover:text-rose-300 text-xs flex items-center gap-1"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setEditingNodeData({
+                                  node: star.accessNode,
+                                  role: "ACCESS_NODE",
+                                })
+                              }
+                              className="text-slate-500 hover:text-[#0f172a] text-xs flex items-center gap-1 cursor-pointer"
+                              title="Editar Gateway"
+                            >
+                              <Edit2 className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                draft.removeAccessNode(star.accessNode.id)
+                              }
+                              className="text-rose-600 hover:text-rose-800 text-xs flex items-center gap-1 cursor-pointer"
+                              title="Eliminar Gateway"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </div>
 
                         {star.items.length === 0 ? (
-                          <p className="text-[11px] text-amber-400">
+                          <p className="text-[11px] text-amber-700">
                             Sin End Nodes conectados (añade al menos 1 enlace para
                             evitar nodo huérfano RN-18).
                           </p>
                         ) : (
-                          <div className="space-y-1.5 pl-2 border-l border-slate-800">
+                          <div className="space-y-1.5 pl-2 border-l-2 border-slate-300">
                             {star.items.map((item) => (
                               <div
                                 key={item.link.id}
-                                className="flex items-center justify-between text-xs text-slate-300 bg-slate-900/80 px-2.5 py-1.5 rounded"
+                                className="flex items-center justify-between text-xs text-[#1e293b] bg-[#f8f9fb] px-2.5 py-1.5 rounded-none border border-slate-300"
                               >
                                 <div>
-                                  <span className="font-medium text-sky-300">
+                                  <span className="font-semibold text-[#0f172a]">
                                     {item.endNode.name}
                                   </span>{" "}
                                   → {star.accessNode.name}{" "}
-                                  <span className="text-slate-400 font-mono text-[11px]">
+                                  <span className="text-slate-500 font-mono text-[11px]">
                                     ({item.distanceKm.toFixed(2)} km ·{" "}
                                     {item.endNode.tx_power_nominal_dbm} dBm)
                                   </span>
                                 </div>
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    draft.removeEndNode(item.endNode.id)
-                                  }
-                                  className="text-rose-400 hover:text-rose-300"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setEditingNodeData({
+                                        node: item.endNode,
+                                        role: "END_NODE",
+                                      })
+                                    }
+                                    className="text-slate-500 hover:text-[#0f172a] cursor-pointer"
+                                    title="Editar Nodo"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      draft.removeEndNode(item.endNode.id)
+                                    }
+                                    className="text-rose-600 hover:text-rose-800 cursor-pointer"
+                                    title="Eliminar Nodo"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -997,7 +1035,7 @@ export function ScenarioEditorPage() {
 
         {/* Right Column: Interactive Leaflet Map + Simulation Readiness Bar */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="h-[460px]">
+          <div className="h-[460px] border border-slate-300 rounded-none overflow-hidden shadow-2xs">
             <ScenarioMap
               bounds={draft.bounds}
               accessNodes={draft.accessNodes}
@@ -1083,6 +1121,21 @@ export function ScenarioEditorPage() {
               payload,
             });
             navigate(`/scenarios/${variant.id}`);
+          }}
+        />
+      )}
+
+      {editingNodeData && (
+        <NodeEditModal
+          node={editingNodeData.node}
+          role={editingNodeData.role}
+          onClose={() => setEditingNodeData(null)}
+          onSave={(nodeId, patch) => {
+            if (editingNodeData.role === "ACCESS_NODE") {
+              draft.updateAccessNode(nodeId, patch);
+            } else {
+              draft.updateEndNode(nodeId, patch);
+            }
           }}
         />
       )}

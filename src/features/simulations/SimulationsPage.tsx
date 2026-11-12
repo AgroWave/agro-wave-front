@@ -26,28 +26,28 @@ function statusBadge(status: SimulationStatus) {
   switch (status) {
     case "COMPLETED":
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
+        <span className="inline-flex items-center gap-1 rounded-xs bg-emerald-50 border border-emerald-300 px-2 py-0.5 text-xs font-semibold text-emerald-800">
           <CheckCircle2 className="h-3.5 w-3.5" />
           Completada
         </span>
       );
     case "RUNNING":
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 px-2.5 py-0.5 text-xs font-medium text-sky-400 animate-pulse">
+        <span className="inline-flex items-center gap-1 rounded-xs bg-sky-50 border border-sky-300 px-2 py-0.5 text-xs font-semibold text-sky-800 animate-pulse">
           <Activity className="h-3.5 w-3.5" />
           En ejecución
         </span>
       );
     case "FAILED":
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2.5 py-0.5 text-xs font-medium text-rose-400">
+        <span className="inline-flex items-center gap-1 rounded-xs bg-rose-50 border border-rose-300 px-2 py-0.5 text-xs font-semibold text-rose-800">
           <XCircle className="h-3.5 w-3.5" />
           Fallida
         </span>
       );
     default:
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-slate-500/15 px-2.5 py-0.5 text-xs font-medium text-slate-300">
+        <span className="inline-flex items-center gap-1 rounded-xs bg-slate-100 border border-slate-300 px-2 py-0.5 text-xs font-semibold text-[#475569]">
           <Clock className="h-3.5 w-3.5" />
           Creada
         </span>
@@ -127,11 +127,11 @@ export function SimulationsPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-300">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Simulaciones</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-black text-[#0f172a] tracking-tight">Simulaciones</h1>
+          <p className="text-sm text-[#475569] font-medium mt-1">
             Ejecuta modelos de propagación Longley-Rice y compara variantes del
             mismo grupo de escenarios.
           </p>
@@ -149,7 +149,7 @@ export function SimulationsPage() {
                   ? "Comparar simulaciones seleccionadas"
                   : "Selecciona al menos 2 simulaciones Completadas del mismo grupo y modelo"
               }
-              className="inline-flex items-center gap-2 rounded-lg border border-sky-500/40 bg-sky-500/10 px-4 py-2 text-sm font-medium text-sky-300 hover:bg-sky-500/20 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 rounded-xs border border-sky-400 bg-sky-50 px-4 py-2 text-sm font-bold text-sky-800 hover:bg-sky-100 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs cursor-pointer"
             >
               <BarChart3 className="h-4 w-4" />
               Comparar ({selectedIds.length})
@@ -158,7 +158,7 @@ export function SimulationsPage() {
           <button
             type="button"
             onClick={() => setShowNewModal(true)}
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500"
+            className="inline-flex items-center gap-2 rounded-xs bg-[#047857] hover:bg-[#065f46] px-4 py-2 text-sm font-bold text-white shadow-2xs border border-[#065f46] cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             Nueva Simulación
@@ -167,7 +167,7 @@ export function SimulationsPage() {
       </div>
 
       {errorMessage && (
-        <div className="rounded-lg border border-rose-500/40 bg-rose-950/50 p-3 text-sm text-rose-300">
+        <div className="rounded-none border border-rose-300 border-l-4 border-l-rose-700 bg-rose-50 p-3 text-sm text-rose-900 font-medium">
           {errorMessage}
         </div>
       )}
@@ -199,7 +199,7 @@ export function SimulationsPage() {
               onChange={(e) =>
                 setStatusFilter(e.target.value as SimulationStatus | "")
               }
-              className="rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-xs text-slate-200"
+              className="rounded-xs border border-slate-300 bg-white px-3 py-2 text-xs text-[#0f172a] shadow-2xs focus:border-[#8b1919] focus:outline-none"
             >
               <option value="">Todos los estados</option>
               <option value="COMPLETED">Completada</option>
@@ -213,7 +213,7 @@ export function SimulationsPage() {
               onChange={(e) =>
                 setSortOrder(e.target.value as "newest" | "oldest" | "name")
               }
-              className="rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-xs text-slate-200"
+              className="rounded-xs border border-slate-300 bg-white px-3 py-2 text-xs text-[#0f172a] shadow-2xs focus:border-[#8b1919] focus:outline-none"
             >
               <option value="newest">Más recientes</option>
               <option value="oldest">Más antiguas</option>
@@ -225,10 +225,10 @@ export function SimulationsPage() {
           const isSelected = selectedIds.includes(sim.id);
           return (
             <div
-              className={`rounded-xl border p-5 transition-colors flex flex-col justify-between gap-4 ${
+              className={`rounded-none border p-5 transition-colors flex flex-col justify-between gap-4 shadow-2xs ${
                 isSelected
-                  ? "border-sky-500 bg-slate-900/90"
-                  : "border-slate-800 bg-slate-900/60 hover:border-slate-700"
+                  ? "border-[#8b1919] bg-[#fbf5f5]"
+                  : "border-slate-300 bg-white hover:border-slate-400"
               }`}
             >
               <div className="space-y-3">
@@ -238,9 +238,9 @@ export function SimulationsPage() {
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => toggleSelect(sim.id)}
-                      className="rounded border-slate-700 bg-slate-950 text-sky-500"
+                      className="rounded-none border-slate-400 text-[#8b1919]"
                     />
-                    <span className="font-semibold text-slate-100">
+                    <span className="font-bold text-[#0f172a]">
                       {sim.name}
                     </span>
                   </label>
@@ -248,40 +248,40 @@ export function SimulationsPage() {
                 </div>
 
                 {sim.description && (
-                  <p className="text-xs text-slate-400 line-clamp-2">
+                  <p className="text-xs text-[#64748b] line-clamp-2">
                     {sim.description}
                   </p>
                 )}
 
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="rounded bg-slate-800 px-2 py-0.5 text-slate-300 font-medium">
+                  <span className="rounded-xs bg-[#f1f3f7] border border-slate-300 px-2 py-0.5 text-[#0f172a] font-semibold">
                     {sim.technology}
                   </span>
-                  <span className="rounded bg-slate-800/70 px-2 py-0.5 text-slate-400">
+                  <span className="rounded-xs bg-[#f1f3f7] border border-slate-200 px-2 py-0.5 text-[#475569]">
                     {sim.propagation_model_id}
                   </span>
-                  <span className="rounded bg-slate-800/50 px-2 py-0.5 font-mono text-[11px] text-slate-400">
+                  <span className="rounded-xs bg-[#f1f3f7] border border-slate-200 px-2 py-0.5 font-mono text-[11px] text-[#475569]">
                     Grupo {sim.comparison_group_id.slice(0, 8)}
                   </span>
                 </div>
 
                 {sim.summary && (
-                  <div className="grid grid-cols-3 gap-2 rounded-lg bg-slate-950/60 p-2.5 text-center text-xs">
+                  <div className="grid grid-cols-3 gap-2 rounded-none bg-[#f8f9fb] border border-slate-200 p-2.5 text-center text-xs">
                     <div>
-                      <div className="text-slate-400">Viables</div>
-                      <div className="font-semibold text-emerald-400">
+                      <div className="text-slate-500 font-medium">Viables</div>
+                      <div className="font-bold text-emerald-700">
                         {sim.summary.viable_links_pct.toFixed(0)} %
                       </div>
                     </div>
                     <div>
-                      <div className="text-slate-400">Margen mín.</div>
-                      <div className="font-mono font-semibold text-slate-200">
+                      <div className="text-slate-500 font-medium">Margen mín.</div>
+                      <div className="font-mono font-bold text-[#0f172a]">
                         {sim.summary.min_margin_db.toFixed(1)} dB
                       </div>
                     </div>
                     <div>
-                      <div className="text-slate-400">Margen medio</div>
-                      <div className="font-mono font-semibold text-slate-200">
+                      <div className="text-slate-500 font-medium">Margen medio</div>
+                      <div className="font-mono font-bold text-[#0f172a]">
                         {sim.summary.mean_margin_db.toFixed(1)} dB
                       </div>
                     </div>
@@ -295,11 +295,11 @@ export function SimulationsPage() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between border-t border-slate-800/80 pt-3">
+              <div className="flex items-center justify-between border-t border-slate-300 pt-3">
                 <button
                   type="button"
                   onClick={() => navigate(`/simulations/${sim.id}`)}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 hover:text-emerald-300"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#047857] hover:text-[#065f46] cursor-pointer"
                 >
                   <Eye className="h-3.5 w-3.5" />
                   Ver resultados
@@ -313,7 +313,7 @@ export function SimulationsPage() {
                       ? "No se puede eliminar mientras está en ejecución (RN-33)"
                       : "Eliminar simulación"
                   }
-                  className="inline-flex items-center gap-1 text-xs text-rose-400 hover:text-rose-300 disabled:opacity-40"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-rose-700 hover:text-rose-900 disabled:opacity-40 cursor-pointer"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                   Eliminar
@@ -325,20 +325,29 @@ export function SimulationsPage() {
       />
 
       {showNewModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-xl border border-slate-800 bg-slate-900 p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-slate-100">
-              Ejecutar Nueva Simulación
-            </h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-xs p-4">
+          <div className="w-full max-w-md rounded-none border border-slate-400 bg-white p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-300 pb-3">
+              <h2 className="text-base font-bold uppercase tracking-wide text-[#0f172a]">
+                Ejecutar Nueva Simulación
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowNewModal(false)}
+                className="text-slate-500 hover:text-slate-800 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[#1e293b] mb-1">
                   Escenario de origen
                 </label>
                 <select
                   value={selectedScenarioId}
                   onChange={(e) => setSelectedScenarioId(e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100"
+                  className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] focus:border-[#8b1919] focus:outline-none"
                 >
                   <option value="">Selecciona un escenario...</option>
                   {scenarios.map((sc) => (
@@ -349,7 +358,7 @@ export function SimulationsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[#1e293b] mb-1">
                   Nombre de la simulación
                 </label>
                 <input
@@ -357,26 +366,26 @@ export function SimulationsPage() {
                   value={newSimName}
                   onChange={(e) => setNewSimName(e.target.value)}
                   placeholder="Ej. Simulación La Calera SF12"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100"
+                  className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] placeholder:text-[#64748b] focus:border-[#8b1919] focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[#1e293b] mb-1">
                   Descripción (opcional)
                 </label>
                 <textarea
                   value={newSimDesc}
                   onChange={(e) => setNewSimDesc(e.target.value)}
                   rows={2}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100"
+                  className="w-full rounded-xs border border-slate-300 bg-white px-3 py-2 text-sm text-[#0f172a] placeholder:text-[#64748b] focus:border-[#8b1919] focus:outline-none"
                 />
               </div>
             </div>
-            <div className="flex justify-end gap-2 pt-2">
+            <div className="flex justify-end gap-2 pt-3 border-t border-slate-300">
               <button
                 type="button"
                 onClick={() => setShowNewModal(false)}
-                className="rounded-lg border border-slate-700 px-4 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800"
+                className="rounded-xs border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-[#1e293b] hover:bg-[#f3f2ef] cursor-pointer"
               >
                 Cancelar
               </button>
@@ -386,7 +395,7 @@ export function SimulationsPage() {
                   !selectedScenarioId || createAndRunMutation.isPending
                 }
                 onClick={() => void handleCreateAndRun()}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-xs bg-[#047857] hover:bg-[#065f46] px-4 py-2 text-xs font-bold text-white shadow-2xs disabled:opacity-50 cursor-pointer"
               >
                 <Play className="h-3.5 w-3.5" />
                 {createAndRunMutation.isPending ? "Iniciando..." : "Simular"}

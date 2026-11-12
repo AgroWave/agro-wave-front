@@ -95,22 +95,22 @@ export function DemDownloadModal(props: DemDownloadModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-          <h2 className="text-lg font-semibold text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xs">
+      <div className="w-full max-w-lg rounded-none border border-slate-400 bg-white p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between border-b border-slate-300 pb-4">
+          <h2 className="text-base font-bold text-[#0f172a] uppercase tracking-wide">
             {t("dem.download_modal_title")}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-slate-100"
+            className="rounded-xs p-1 text-slate-500 hover:bg-slate-100 hover:text-[#0f172a] cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {serverError && <Alert variant="error">{serverError}</Alert>}
+        {serverError && <Alert variant="destructive">{serverError}</Alert>}
 
         <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
           <div>
@@ -122,7 +122,7 @@ export function DemDownloadModal(props: DemDownloadModalProps) {
               placeholder={t("dem.name_placeholder")}
             />
             {errors.name && (
-              <p className="mt-1 text-xs text-rose-400">{errors.name.message}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.name.message}</p>
             )}
           </div>
 
@@ -135,12 +135,12 @@ export function DemDownloadModal(props: DemDownloadModalProps) {
               placeholder={t("dem.description_placeholder")}
             />
             {errors.description && (
-              <p className="mt-1 text-xs text-rose-400">{errors.description.message}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.description.message}</p>
             )}
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-950/50 p-4 space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <div className="rounded-none border border-slate-300 bg-[#f8f9fb] p-4 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#475569]">
               {t("dem.bounds_label")}
             </h3>
 
