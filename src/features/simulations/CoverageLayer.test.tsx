@@ -3,7 +3,7 @@
  */
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as simulationsApi from "../../api/simulations";
@@ -172,14 +172,21 @@ describe("AC-30: DSR Metrics and Spatial Coverage UI", () => {
     expect(screen.getByTestId("coverage-map-container")).toBeInTheDocument();
     expect(screen.getByText(/Nodos Sensores \(1\)/i)).toBeInTheDocument();
 
-    // Verify Radio Mobile export button is rendered
-    const exportButton = screen.getByRole("link", {
+    // Verify Radio Mobile export button is rendered and triggers authenticated export
+    const exportButton = screen.getByRole("button", {
       name: /Exportar para Radio Mobile/i,
     });
     expect(exportButton).toBeInTheDocument();
-    expect(exportButton).toHaveAttribute(
-      "href",
-      "/api/v1/simulations/sim-dsr-1/coverage/export",
+
+    vi.mocked(simulationsApi.exportCoverageData).mockResolvedValue(
+      new Blob(["{}"], { type: "application/json" }),
     );
+    fireEvent.click(exportButton);
+    await waitFor(() => {
+      expect(simulationsApi.exportCoverageData).toHaveBeenCalledWith(
+        "test-token",
+        "sim-dsr-1",
+      );
+    });
   });
 });

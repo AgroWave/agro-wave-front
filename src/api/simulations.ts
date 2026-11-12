@@ -205,3 +205,36 @@ export async function compareSimulations(
   return handleResponse<ComparisonReport>(response);
 }
 
+/**
+ * Downloads coverage and DSR metrics data in Radio Mobile calibration format (UC-CO-04, AC-29).
+ * Requests the spatial sampling dataset with Bearer token authentication and returns
+ * the response as a downloadable Blob.
+ * @param token - Bearer JWT access token.
+ * @param simulationId - Simulation UUID.
+ * @returns Blob containing the JSON coverage export dataset.
+ */
+export async function exportCoverageData(
+  token: string,
+  simulationId: string,
+): Promise<Blob> {
+  const response = await fetch(
+    `/api/v1/simulations/${simulationId}/coverage/export`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  if (!response.ok) {
+    const errorData = (await response.json().catch(() => ({}))) as {
+      message?: string;
+      detail?: string;
+    };
+    throw new Error(
+      errorData.message ||
+        errorData.detail ||
+        "Error al exportar datos de cobertura",
+    );
+  }
+  return response.blob();
+}
+
+

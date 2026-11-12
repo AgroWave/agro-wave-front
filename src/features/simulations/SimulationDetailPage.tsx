@@ -13,6 +13,8 @@ import {
   type FresnelVerdict,
   type LinkResult,
 } from "../../domain/simulation";
+import { exportCoverageData } from "../../api/simulations";
+import { useAuthStore } from "../auth/useAuthStore";
 import { LinkProfileChart } from "./LinkProfileChart";
 import { useSimulationDetail, useSimulationMutations } from "./useSimulations";
 import { DsrMetricsCards } from "./components/DsrMetricsCards";
@@ -49,9 +51,37 @@ function fresnelBadge(verdict: FresnelVerdict) {
 export function SimulationDetailPage() {
   const { id = "" } = useParams();
   const navigate = useNavigate();
+  const { token } = useAuthStore();
   const { data: sim, isLoading } = useSimulationDetail(id);
   const { retryMutation } = useSimulationMutations();
   const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+
+  const handleExport = async () => {
+    if (!token || !sim?.id) return;
+    setIsExporting(true);
+    setExportError(null);
+    try {
+      const blob = await exportCoverageData(token, sim.id);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `coverage_${sim.id}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Error al exportar los resultados para Radio Mobile";
+      setExportError(message);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   if (isLoading || !sim) {
     return (
@@ -112,16 +142,15 @@ export function SimulationDetailPage() {
             </button>
           )}
           {sim.status === "COMPLETED" ? (
-            <a
-              href={`/api/v1/simulations/${sim.id}/coverage/export`}
-              download={`coverage_${sim.id}.json`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xs border border-red-300 bg-red-50 hover:bg-red-100 px-4 py-2 text-xs font-bold text-red-800 shadow-2xs cursor-pointer transition-colors"
+            <button
+              type="button"
+              onClick={() => void handleExport()}
+              disabled={isExporting}
+              className="inline-flex items-center gap-1.5 rounded-xs border border-red-300 bg-red-50 hover:bg-red-100 px-4 py-2 text-xs font-bold text-red-800 shadow-2xs cursor-pointer transition-colors disabled:opacity-50"
             >
-              <Download className="h-3.5 w-3.5" />
-              Exportar para Radio Mobile
-            </a>
+              <Download className={`h-3.5 w-3.5 ${isExporting ? "animate-bounce" : ""}`} />
+              {isExporting ? "Exportando..." : "Exportar para Radio Mobile"}
+            </button>
           ) : (
             <button
               type="button"
@@ -135,6 +164,20 @@ export function SimulationDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Export error banner */}
+      {exportError && (
+        <div className="rounded-none border border-rose-300 border-l-4 border-l-rose-700 bg-rose-50 p-4 text-sm text-rose-900 flex items-center justify-between">
+          <span>{exportError}</span>
+          <button
+            type="button"
+            onClick={() => setExportError(null)}
+            className="text-rose-700 hover:text-rose-900 font-bold ml-2 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* Running banner */}
       {(sim.status === "RUNNING" || sim.status === "CREATED") && (
